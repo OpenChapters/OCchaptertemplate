@@ -1,0 +1,74 @@
+
+% PLEASE DO NOT CHANGE THESE ENTRIES; USER-DEFINED COMMANDS SHOULD BE LISTED
+% BELOW THE TRIPLE %%% LINE.
+
+\newwrite\authorfile
+\newcommand{\writeauthor}[8]{%
+  \immediate\write\authorfile{\unexpanded{\chapterauthorentry{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}}}%
+}
+
+\newcommand{\processauthors}{%
+  % Close the file for writing before attempting to read from it.
+  \immediate\closeout\authorfile%
+
+  \openin\authorfile=\jobname-authors.aux\relax%
+  \ifeof\authorfile
+    \typeout{^^J^^J(Run LaTeX again to generate the Author Address List)^^J^^J}%
+  \else
+    \typeout{^^J^^J(Reading author address list from \jobname-authors.aux)^^J}%
+    \clearpage
+    \vspace*{0.25in}\noindent{\Large\sffamily\bfseries {\color{OCblue}List of Chapter Authors}}\vspace*{0.25in}
+     \loop
+        \read\authorfile to \chapterline
+        \typeout{(\chapterline)}
+        \unless\ifeof\authorfile
+          \expandafter\chapterline
+      \repeat
+    \closein\authorfile%
+  \fi
+}
+
+% entries are: Chapter Page Number; Chapter Label; Last Name; First Name; Department; Institution; Email; URL
+% entry is formatted with this \chapterauthorentry command; this command is initialized in each chapter using the \writeauthor
+% command which write single line entries to the main-authors.aux file.  This file is then read by the \processauthors command
+% defined above.
+\newcommand{\chapterauthorentry}[8]{%
+  \par\noindent
+  {\sffamily\bfseries{\color{OCblue}Chapter \ref{#1}: #2}\cftdotfill{5}\textbf{#3, #4}}
+  {\small\sffamily\begin{flushright}
+  #5\\
+  #6\\
+  Email: {\color{OCBlueThread}\href{mailto:#7}{#7}}\\
+  URL: {\color{OCBlueThread}\href{#8}{Home web page}}%
+  \end{flushright}}
+  \par\medskip
+}
+
+
+\DeclareRobustCommand{\lightgraybox}[1]{%
+  \begin{tcolorbox}[
+    breakable,
+    colback=gray!10, % Use a light gray color
+    colframe=gray!10, % Set the frame color to match the background
+    boxsep=5pt, % Padding inside the box
+    arc=0pt, % Square corners
+    outer arc=0pt,
+    width=\textwidth, % Make the box full text width
+    enlarge left by=0mm,
+  ] #1 \end{tcolorbox}%
+}
+
+\newenvironment{learningobjectives}[1]{%
+\lightgraybox{\begin{center}{\LARGE\sffamily\bfseries {\color{OCBurntOrange}\textbf{Learning Objectives}}}\\[1em]\end{center}%
+%
+{\color{OCalmostblack}\small\sffamily\hyphenpenalty=10000%
+\begin{multicols}{2}#1\end{multicols}\hyphenpenalty=50}}}{}
+
+
+
+% \listfiles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% USER DEFINED COMMANDS START HERE %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

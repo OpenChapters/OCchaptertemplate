@@ -1,0 +1,1047 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% original header; the OpenChapters.sty file is based on the Legrand Orange Book format
+% but has been heavily customized. In particular it is now operated via the arara package which
+% provides the necessary customizable level of automation for a project like this.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Legrand Orange Book
+% LaTeX Template
+% Version 2.0 (9/2/15)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Mathias Legrand (legrand.mathias@gmail.com) with modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Compiling this template:
+% This template uses biber for its bibliography and makeindex for its index.
+% When you first open the template, compile it from the command line with the 
+% commands below to make sure your LaTeX distribution is configured correctly:
+%
+% 1) pdflatex main
+% 2) makeindex main.idx -s StyleInd.ist
+% 3) biber main
+% 4) pdflatex main x 2
+%
+% After this, when you wish to update the bibliography/index use the appropriate
+% command above and make sure to compile with pdflatex several times 
+% afterwards to propagate your changes to the document.
+%
+% This template also uses a number of packages which may need to be
+% updated to the newest versions for the template to compile. It is strongly
+% recommended you update your LaTeX distribution if you have any
+% compilation errors.
+%
+% Important note:
+% Chapter heading images should have a 2:1 width:height ratio,
+% e.g. 920px width and 460px height.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% this package has been modified a bit to incorporate other packages not used in the original version [MDG]
+% color schemes have been altered as well.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+\ProvidesPackage{OpenChapters}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% next is the content of the Legrand Orange Book structure.sty file, but with many
+% modifications, among others the use of the \graphicspath and the chapter header
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	VARIOUS REQUIRED PACKAGES AND CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+% package loads from the original arara.sty file have been moved here
+\usepackage{upquote}
+\usepackage{tcolorbox}
+\usepackage{comfortaa}
+\usepackage{adforn}
+\usepackage{forest}
+\usepackage{tabularx}
+
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm,headsep=10pt,a4paper]{geometry} % Page margins
+
+\usepackage{graphicx} % Required for including pictures
+\newcommand{\chaptergraphicspath}{Figures/}
+\graphicspath{{\chaptergraphicspath}} % Specifies the directory where pictures are stored
+
+\usepackage{epsfig}
+
+\usepackage{tikz} % Required for drawing custom shapes
+\usepackage{bm}
+
+\usepackage[rplt]{floatflt}
+\usepackage[section]{placeins}
+
+\usepackage[english]{babel} % English language/hyphenation
+
+\usepackage{enumitem} % Customize lists
+\setlist{nolistsep} % Reduce spacing between bullet points and numbered lists
+
+\usepackage{booktabs} % Required for nicer horizontal rules in tables
+
+\usepackage[table]{xcolor} % Required for specifying colors by name
+\definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
+
+\usepackage{url} 
+\usepackage{multirow,array}
+\usepackage{arydshln}
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
+%----------------------------------------------------------------------------------------
+%	FONTS
+%----------------------------------------------------------------------------------------
+\usepackage{avant} % Use the Avantgarde font for headings
+%\usepackage{mathptmx} % Use the Adobe Times Roman as the default text font together with math symbols from the Symbol, Chancery and Computer Modern fonts
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+%% =============================================
+%%Import symbols from font cm without importing the whole package
+%%this is needed to properly put a \hat on top of the quaternion imaginary units i and j,
+%% since the mathptmx package does not define \jmath.  [MDG]
+%% =============================================
+%\newcommand\imCMsym[4][\mathord]{%
+%  \DeclareFontFamily{U} {#2}{}
+%  \DeclareFontShape{U}{#2}{m}{n}{
+%    <-6> #25
+%    <6-7> #26
+%    <7-8> #27
+%    <8-9> #28
+%    <9-10> #29
+%    <10-12> #210
+%    <12-> #212}{}
+%  \DeclareSymbolFont{CM#2} {U} {#2}{m}{n}
+%  \DeclareMathSymbol{#4}{#1}{CM#2}{#3}
+%}
+%\newcommand\alsoimCMsym[4][\mathord]{\DeclareMathSymbol{#4}{#1}{CM#2}{#3}}
+%
+%\imCMsym{cmmi}{123}{\CMimath}
+%\imCMsym{cmmi}{124}{\CMjmath}
+%\imCMsym[\mathop]{cmsy}{113}{\CMamalg}
+%\imCMsym[\mathop]{cmex}{96}{\CMcoprod}
+%\alsoimCMsym[\mathop]{cmex}{97}{\CMbigcoprod}
+%
+
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[utf8]{inputenc} % Required for including letters with accents
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY AND INDEX
+%----------------------------------------------------------------------------------------
+
+\usepackage[style=ext-numeric,citestyle=numeric-comp,sorting=none,autopunct=true,autolang=hyphen,hyperref=true,abbreviate=false,backref=false,backend=biber,autocite=superscript,maxnames=99,articlein=false,casechanger=latex2e]{biblatex}
+
+\defbibheading{bibempty}{}
+
+\usepackage{calc} % For simpler calculation - used for spacing the index letter headings correctly
+\usepackage{makeidx} % Required to make an index
+\makeindex % Tells LaTeX to create the files required for indexing
+
+%----------------------------------------------------------------------------------------
+%	MAIN TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+\usepackage{titletoc} % Required for manipulating the table of contents
+\contentsmargin{0cm} % Removes the default margin
+
+% Change color of chapter entries in ToC [defined with help from CIT's Nathan Snizaski]
+\definecolor{OCpurple}{RGB}{173,73,104}
+\definecolor{OCblue}{RGB}{20,107,176}
+\definecolor{OClightblue}{RGB}{121,194,202}
+\definecolor{OCalmostblack}{RGB}{32,32,32}
+\definecolor{OCwhite}{RGB}{255,255,255}
+\definecolor{OCBurntOrange}{RGB}{204,85,0}
+% CMU core colors
+\definecolor{OCCarnegieRed}{RGB}{196,18,48}
+\definecolor{OCIronGray}{RGB}{109,110,113}
+\definecolor{OCSteelGray}{RGB}{224,224,224}
+\definecolor{OCBlack}{RGB}{0,0,0}
+
+%CMU secondary colors: Tartan Palette [Bold, Youthful, Passionate, Fearless, Audacious]
+% these colors require OCCarnegieRed to be present
+\definecolor{OCScotsRose}{RGB}{239,58,71}
+\definecolor{OCGoldThread}{RGB}{253,181,21}
+\definecolor{OCGreenThread}{RGB}{0,150,71}
+\definecolor{OCTealThread}{RGB}{0,143,145}
+\definecolor{OCBlueThread}{RGB}{4,54,115}
+\definecolor{OCHighlandsSkyBlue}{RGB}{0,123,192}
+
+%CMU secondary colors: Campus Palette [Insightful, Conscientious, Creative, Pragmatic, Entrepreneurial]
+% these colors require OCCarnegieRed to be present
+\definecolor{OCMachineryHallTan}{RGB}{188,180,158}
+\definecolor{OCKittaningBrickBeige}{RGB}{228,218,196}
+\definecolor{OCHornbostelTeal}{RGB}{31,76,76}
+\definecolor{OCPalladianGreen}{RGB}{113,159,148}
+\definecolor{OCWeaverBlue}{RGB}{25,44,75}
+\definecolor{OCSkiboRed}{RGB}{149,17,32}
+
+
+\usepackage{tocloft} % Load the tocloft package
+\renewcommand{\contentsname}{Table of Contents}
+\setcounter{tocdepth}{2}
+
+\renewcommand{\@pnumwidth}{1em}
+\setlength\cftpartindent{0pt}
+\setlength\cftsecindent{0pt}
+\setlength\cftsubsecindent{0.95em}
+
+\renewcommand{\cftpartfont}{\color{OCblue}}
+
+% chapter TOC entries are handled in a different way... see below 
+%\renewcommand{\cftchapfont}{\color{OCblack}\sffamily\bfseries}
+%\renewcommand{\cftchapdotsep}{\nocftdots}
+
+% Change color of section entries in ToC
+\renewcommand{\cftsecfont}{\color{OCpurple}\sffamily}
+
+% Change color of subsection entries in ToC
+\renewcommand{\cftsubsecfont}{\color{OCIronGray}\sffamily\small}
+
+%% Chapter text styling
+\titlecontents{chapter}[1.25cm] % Indentation
+{\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
+{\color{OCblue}\contentslabel[\Large\thecontentslabel]{1.25cm}\hspace*{-0.35cm}\color{OCBlack}} % Chapter number
+{\color{OCBlack}}  
+{\color{OCBlack}\normalsize\sffamily\hspace*{0.35cm}\hfill\thecontentspage\newline\vspace*{-0.1in}\hspace*{-0.5in}\rule[0.12in]{\textwidth}{0.5pt}\vspace*{0.025in}} % Page number
+
+%----------------------------------------------------------------------------------------
+%	MINI TABLE OF CONTENTS IN PART HEADS   [this still needs some work... MDG]
+%----------------------------------------------------------------------------------------
+
+% Chapter text styling
+\titlecontents{lchapter}[0em] % Indenting
+{\addvspace{15pt}\large\sffamily\bfseries} % Spacing and font options for chapters
+{\color{ocre}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} % Chapter number
+{}  
+{\color{ocre}\normalsize\sffamily\bfseries\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+
+% Section text styling
+\titlecontents{lsection}[0em] % Indenting
+{\sffamily\small} % Spacing and font options for sections
+{\contentslabel[\thecontentslabel]{1.25cm}} % Section number
+{}
+{}
+%
+%% Subsection text styling
+%\titlecontents{lsubsection}[.5em] % Indentation
+%{\normalfont\footnotesize\sffamily} % Font settings
+%{}
+%{}
+%{}
+
+%----------------------------------------------------------------------------------------
+%	PAGE HEADERS
+%----------------------------------------------------------------------------------------
+
+\usepackage{fancyhdr} % Required for header and footer configuration
+
+% see below for the output of the gitinfo2 package that will be placed in the footer
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\sffamily\normalsize\bfseries\chaptername\ \thechapter.\ #1}{}} % Chapter text font settings
+\renewcommand{\sectionmark}[1]{\markright{\sffamily\normalsize\thesection\hspace{5pt}#1}{}} % Section text font settings
+\fancyhf{} \fancyhead[LE,RO]{\sffamily\normalsize\thepage} % Font setting for the page number in the header
+\fancyhead[LO]{\rightmark} % Print the nearest section name on the left side of odd pages
+\fancyhead[RE]{\leftmark} % Print the current chapter name on the right side of even pages
+\renewcommand{\headrulewidth}{0.5pt} % Width of the rule under the header
+\addtolength{\headheight}{2.5pt} % Increase the spacing around the header slightly
+\renewcommand{\footrulewidth}{0pt} % Removes the rule in the footer
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}} % Style for when a plain pagestyle is specified
+
+% Removes the header from odd empty pages at the end of chapters
+\makeatletter
+\renewcommand{\cleardoublepage}{
+\clearpage\ifodd\c@page\else
+\hbox{}
+\vspace*{\fill}
+\thispagestyle{empty}
+\newpage
+\fi}
+
+%----------------------------------------------------------------------------------------
+%	THEOREM STYLES
+%----------------------------------------------------------------------------------------
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm} % For math equations, theorems, symbols, etc
+
+\newcommand{\intoo}[2]{\mathopen{]}#1\,;#2\mathclose{[}}
+\newcommand{\ud}{\mathop{\mathrm{{}d}}\mathopen{}}
+\newcommand{\intff}[2]{\mathopen{[}#1\,;#2\mathclose{]}}
+\newtheorem{notation}{Notation}[chapter]
+
+% Boxed/framed environments
+\newtheoremstyle{ocrenumbox}% % Theorem style name
+{0pt}% Space above
+{0pt}% Space below
+{\normalfont}% % Body font
+{}% Indent amount
+{\small\bf\sffamily\color{ocre}}% % Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\color{ocre}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
+\renewcommand{\qedsymbol}{$\blacksquare$}% Optional qed square
+
+\newtheoremstyle{blacknumex}% Theorem style name
+{5pt}% Space above
+{5pt}% Space below
+{\normalfont}% Body font
+{} % Indent amount
+{\small\bf\sffamily}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily{\tiny\ensuremath{\blacksquare}}\nobreakspace\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}% Optional theorem note
+
+\newtheoremstyle{blacknumbox} % Theorem style name
+{0pt}% Space above
+{0pt}% Space below
+{\normalfont}% Body font
+{}% Indent amount
+{\small\bf\sffamily}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}% Optional theorem note
+
+% Non-boxed/non-framed environments
+\newtheoremstyle{ocrenum}% % Theorem style name
+{5pt}% Space above
+{5pt}% Space below
+{\normalfont}% % Body font
+{}% Indent amount
+{\small\bf\sffamily\color{ocre}}% % Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\color{ocre}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
+\renewcommand{\qedsymbol}{$\blacksquare$}% Optional qed square
+\makeatother
+
+% Defines the theorem text style for each type of theorem to one of the three styles above
+\newcounter{dummy} 
+\numberwithin{dummy}{section}
+\theoremstyle{ocrenumbox}
+\newtheorem{theoremeT}[dummy]{Theorem}
+\newtheorem{problem}{Problem}[chapter]
+\newtheorem{exerciseT}{Exercise}[chapter]
+\theoremstyle{blacknumex}
+\newtheorem{exampleT}{Example}[chapter]
+\theoremstyle{blacknumbox}
+\newtheorem{vocabulary}{Vocabulary}[chapter]
+\newtheorem{definitionT}{Definition}[section]
+\newtheorem{corollaryT}[dummy]{Corollary}
+\theoremstyle{ocrenum}
+\newtheorem{proposition}[dummy]{Proposition}
+
+%----------------------------------------------------------------------------------------
+%	DEFINITION OF COLORED BOXES
+%----------------------------------------------------------------------------------------
+
+\RequirePackage[framemethod=default]{mdframed} % Required for creating the theorem, definition, exercise and corollary boxes
+
+% Theorem box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+backgroundcolor=black!5,
+linecolor=ocre,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+innerbottommargin=5pt]{tBox}
+
+% Exercise box	  
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+backgroundcolor=ocre!10,
+linecolor=ocre,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+innerbottommargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt]{eBox}	
+
+% Definition box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=ocre,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=0pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=0pt]{dBox}	
+
+% Corollary box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=gray,
+backgroundcolor=black!5,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=5pt]{cBox}
+
+% Creates an environment for each type of theorem and assigns it a theorem text style from the "Theorem Styles" section above and a colored box from above
+\newenvironment{theorem}{\begin{tBox}\begin{theoremeT}}{\end{theoremeT}\end{tBox}}
+\newenvironment{exercise}{\begin{eBox}\begin{exerciseT}}{\hfill{\color{ocre}\tiny\ensuremath{\blacksquare}}\end{exerciseT}\end{eBox}}				  
+\newenvironment{definition}{\begin{dBox}\begin{definitionT}}{\end{definitionT}\end{dBox}}	
+\newenvironment{example}{\begin{exampleT}}{\hfill{\tiny\ensuremath{\blacksquare}}\end{exampleT}}		
+\newenvironment{corollary}{\begin{cBox}\begin{corollaryT}}{\end{corollaryT}\end{cBox}}	
+
+%----------------------------------------------------------------------------------------
+%	REMARK ENVIRONMENT
+%----------------------------------------------------------------------------------------
+
+\newenvironment{remark}{\par\vspace{10pt}\small % Vertical white space above the remark and smaller font size
+\begin{list}{}{
+\leftmargin=35pt % Indentation on the left
+\rightmargin=25pt}\item\ignorespaces % Indentation on the right
+\makebox[-2.5pt]{\begin{tikzpicture}[overlay]
+\node[draw=ocre!60,line width=1pt,circle,fill=ocre!25,font=\sffamily\bfseries,inner sep=2pt,outer sep=0pt] at (-15pt,0pt){\textcolor{ocre}{R}};\end{tikzpicture}} % Orange R in a circle
+\advance\baselineskip -1pt}{\end{list}\vskip5pt} % Tighter line spacing and white space after remark
+
+%----------------------------------------------------------------------------------------
+%	SECTION NUMBERING IN THE MARGIN
+%----------------------------------------------------------------------------------------
+
+\makeatletter
+\renewcommand{\@seccntformat}[1]{\llap{\textcolor{ocre}{\csname the#1\endcsname}\hspace{1em}}}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}
+{-4ex \@plus -1ex \@minus -.4ex}
+{1ex \@plus.2ex }
+{\normalfont\large\sffamily\bfseries}}
+\renewcommand{\subsection}{\@startsection {subsection}{2}{\z@}
+{-3ex \@plus -0.1ex \@minus -.4ex}
+{0.5ex \@plus.2ex }
+{\normalfont\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection {subsubsection}{3}{\z@}
+{-2ex \@plus -0.1ex \@minus -.2ex}
+{.2ex \@plus.2ex }
+{\normalfont\small\sffamily\bfseries}}                        
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
+{-2ex \@plus-.2ex \@minus .2ex}
+{.1ex}
+{\normalfont\small\sffamily\bfseries}}
+
+%----------------------------------------------------------------------------------------
+%	PART HEADINGS
+%----------------------------------------------------------------------------------------
+
+% numbered part in the table of contents
+\newcommand{\@mypartnumtocformat}[2]{%
+\setlength\fboxsep{0pt}%
+\noindent\colorbox{white}{\strut\parbox[c][.7cm]{\ecart}{}}\hskip\esp\colorbox{white}{\strut\parbox[c][.7cm]{\linewidth-\ecart-\esp}{\hspace*{-0.25in}\Large\sffamily\centering{Part #1 -- #2}}}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% unnumbered part in the table of contents
+\newcommand{\@myparttocformat}[1]{%
+\setlength\fboxsep{0pt}%
+\noindent\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth}{\Large\sffamily\centering#1}}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength\esp
+\setlength\esp{4pt}
+\newlength\ecart
+\setlength\ecart{1.2cm-\esp}
+\newcommand{\thepartimage}{}%
+\newcommand{\partimage}[1]{\renewcommand{\thepartimage}{#1}}%
+\def\@part[#1]#2{%
+\ifnum \c@secnumdepth >-2\relax%
+\refstepcounter{part}%
+%\addcontentsline{toc}{part}{\texorpdfstring{\protect\@mypartnumtocformat{\thepart}{#1}}{\partname~\thepart\ ---\ #1}}
+\addcontentsline{toc}{part}{\texorpdfstring{\protect\@mypartnumtocformat{\thepart}{#1}}{\partname}}
+\else%
+\addcontentsline{toc}{part}{\texorpdfstring{\protect\@myparttocformat{#1}}{#1}}%
+\fi%
+\startcontents%
+\markboth{}{}%
+{\thispagestyle{empty}%
+\begin{tikzpicture}[remember picture,overlay]%
+\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%	
+\fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
+\node[anchor=north] at (4cm,-3.25cm){\color{black}\fontsize{220}{100}\sffamily\bfseries\@Roman\c@part}; 
+\node[anchor=south east] at (\paperwidth-1cm,-\paperheight+1cm){\parbox[t][][t]{8.5cm}{
+\printcontents{l}{0}{\setcounter{tocdepth}{0}}%
+}};
+\node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm){\parbox[t][][t]{15cm}{\strut\raggedleft\color{black}\fontsize{30}{30}\sffamily\bfseries#2}};
+\end{tikzpicture}};
+\end{tikzpicture}}%
+\@endpart}
+\def\@spart#1{%
+\startcontents%
+\phantomsection
+{\thispagestyle{empty}%
+\begin{tikzpicture}[remember picture,overlay]%
+\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%	
+\fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
+\node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm){\parbox[t][][t]{15cm}{\strut\raggedleft\color{black}\fontsize{30}{30}\sffamily\bfseries#1}};
+\end{tikzpicture}};
+\end{tikzpicture}}
+\addcontentsline{toc}{part}{\texorpdfstring{%
+\setlength\fboxsep{0pt}%
+\noindent\protect\colorbox{white}{\strut\protect\parbox[c][.7cm]{\linewidth}{\Large\sffamily\protect\centering #1\quad\mbox{}}}}{#1}}%
+\@endpart}
+\def\@endpart{\vfil\newpage
+\if@twoside
+\if@openright
+\null
+\thispagestyle{empty}%
+\newpage
+\fi
+\fi
+\if@tempswa
+\twocolumn
+\fi}
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER HEADINGS
+%----------------------------------------------------------------------------------------
+
+% modified by MDG [11/28/17]: added OCchapterauthor in a second smaller box
+% added optional "Foundational" indicator (this used to be "Core" in an earlier version)
+% added option to omit header image for chapter (default for new chapter)
+\usepackage{etoolbox}  % for string comparisons
+\newcommand{\thechapterimage}{}%
+\newcommand{\chapterimage}[1]{\renewcommand{\thechapterimage}{#1}}%
+\newcommand{\theOCchapterauthor}{}%
+\newcommand{\OCchapterauthor}[1]{\renewcommand{\theOCchapterauthor}{#1}}%
+\newcommand{\nono}{No}
+\newcommand{\thecorechapter}{\nono}%
+\newcommand{\corechapter}[1]{\renewcommand{\thecorechapter}{#1}}%
+\newcommand{\noheaderimage}{noheaderimage}
+\def\@makechapterhead#1{%
+{\parindent \z@ \raggedright \normalfont
+\ifnum \c@secnumdepth >\m@ne
+\if@mainmatter
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+% draw the chapter header image only if it has been requested
+\expandafter\ifdefstring{\thechapterimage}{\noheaderimage}{}{\node[anchor=north west,inner sep=0pt] at (0,0) {\includegraphics[width=\paperwidth]{\thechapterimage}};}
+% draw the Foundational indicator if this is a core chapter
+\expandafter\ifdefstring{\thecorechapter}{\nono}{}{\draw[anchor=west] (\Gm@lmargin-2cm,-1.5cm) node [line width=2pt,rounded corners=10pt,draw=red,fill=white,inner sep=10pt]{\strut\makebox[4.7cm]{}};\draw[anchor=west] (\Gm@lmargin-1.7cm,-1.55cm) node {\huge\sffamily\bfseries\color{black}Foundational\strut};}
+% Chapter title
+%\draw[anchor=west] (\Gm@lmargin,-7cm) node [line width=2pt,rounded corners=15pt,draw=ocre,fill=white,fill opacity=0.5,inner sep=15pt]{\strut\makebox[22cm]{}};
+\draw[anchor=west] (\Gm@lmargin,-7cm) node [line width=2pt,rounded corners=15pt,draw=ocre,fill=white,inner sep=15pt]{\strut\makebox[22cm]{}};
+\draw[anchor=west] (\Gm@lmargin+.3cm,-7cm) node {\huge\sffamily\bfseries\color{black}\thechapter. #1\strut};
+% chapter author name and affiliation
+%\draw[anchor=west] (\Gm@lmargin+2.5cm,-9cm) node [line width=1pt,rounded corners=10pt,draw=ocre,fill=white,fill opacity=0.5,inner sep=10pt]{\strut\makebox[22cm]{}};
+\draw[anchor=west] (\Gm@lmargin+2.5cm,-9cm) node [line width=1pt,rounded corners=10pt,draw=ocre,fill=white,inner sep=10pt]{\strut\makebox[22cm]{}};
+\draw[anchor=west] (\Gm@lmargin+2.8cm,-9cm) node {\large\sffamily\bfseries\color{black}\theOCchapterauthor\strut};
+\end{tikzpicture}};
+\end{tikzpicture}
+\else
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+\expandafter\ifdefstring{\thechapterimage}{\noheaderimage}{}{\node[anchor=north west,inner sep=0pt] at (0,0) {\includegraphics[width=\paperwidth]{\thechapterimage}};}
+\draw[anchor=west] (\Gm@lmargin,-9cm) node [line width=2pt,rounded corners=15pt,draw=ocre,fill=white,fill opacity=0.5,inner sep=15pt]{\strut\makebox[22cm]{}};
+\draw[anchor=west] (\Gm@lmargin+.3cm,-9cm) node {\huge\sffamily\bfseries\color{black}#1\strut};
+\end{tikzpicture}};
+\end{tikzpicture}
+\fi\fi\par\vspace*{270\p@}}
+\renewcommand{\thecorechapter}{\nono}
+\renewcommand{\thechapterimage}{\noheaderimage}}
+
+%-------------------------------------------
+
+\def\@makeschapterhead#1{%
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+\expandafter\ifdefstring{\thechapterimage}{\noheaderimage}{}{\node[anchor=north west,inner sep=0pt] at (0,0) {\includegraphics[width=\paperwidth]{\thechapterimage}};}
+\draw[anchor=west] (\Gm@lmargin,-9cm) node [line width=2pt,rounded corners=15pt,draw=ocre,fill=white,fill opacity=0.5,inner sep=15pt]{\strut\makebox[22cm]{}};
+\draw[anchor=west] (\Gm@lmargin+.3cm,-9cm) node {\huge\sffamily\bfseries\color{black}#1\strut};
+\end{tikzpicture}};
+\end{tikzpicture}
+\par\vspace*{270\p@}}
+\makeatother
+
+%----------------------------------------------------------------------------------------
+%	HYPERLINKS IN THE DOCUMENTS
+%----------------------------------------------------------------------------------------
+
+\usepackage{hyperref}
+
+\hypersetup{hidelinks,colorlinks=false,breaklinks=true,citecolor=blue,urlcolor=blue,bookmarksopen=false,pdftitle={Title},pdfauthor={Author}}
+
+\usepackage{bookmark}
+\bookmarksetup{
+open,
+numbered,
+addtohook={%
+\ifnum\bookmarkget{level}=0 % chapter
+\bookmarksetup{bold}%
+\fi
+\ifnum\bookmarkget{level}=-1 % part
+\bookmarksetup{color=ocre,bold}%
+\fi
+}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is the end of the original structure.sty file from the Legrand Orange Book template
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{csquotes}
+\usepackage{arara}
+
+% since this is an open source book managed through a git-style repository, clearly state the version information at the bottom of each page...
+\usepackage[local,mark]{gitinfo2}
+\renewcommand{\gitMarkPref}{[github.com/OpenChapters]}
+\renewcommand{\gitMarkFormat}{\color{gray!50}\footnotesize\sffamily}
+
+% the formatting command for the git version string at the bottom of each page.
+\renewcommand{\gitMark}{Branch: \gitBranch\,@\,\gitAbbrevHash{} \textbullet{} Release:\gitReln{} (\gitAuthorDate)}
+
+% figures with wrap-around text and surrounded by an Ovalbox
+\usepackage{wrapfig}
+\usepackage{fancybox}
+
+%
+%% The fancyvrb package lets us customize the formatting of verbatim
+%% environments.  We use a slightly smaller font.
+%\usepackage{fancyvrb}
+%\fvset{fontsize=\normalsize}
+%
+%% Small sections of multiple columns
+\usepackage{multicol}
+%
+% provides an alternative format for side notes
+\usepackage[shadow,colorinlistoftodos,textsize=scriptsize,textwidth=2.8cm]{mytodonotes}
+
+% and define a few frequently used todo formats
+%\newcommand{\sideremark}[1]{\todo[noline,backgroundcolor=green!20]{#1}}
+%\newcommand{\danger}{\marginpar{\dbend}}
+
+% and we will stick to SI units, so we use the appropriate package
+\usepackage{siunitx}
+
+% These commands are used to pretty-print LaTeX commands
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+
+% Inserts a blank page
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+
+% Prints the month name (e.g., January) and the year (e.g., 2008)
+\newcommand{\monthyear}{%
+  \ifcase\month\or January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or
+  December\fi\space\number\year
+}
+
+% special symbols for the imaginary quaternion units
+\newcommand{\qi}{\mathrm{i}}
+\newcommand{\qj}{\mathrm{j}}
+\newcommand{\qk}{\mathrm{k}}
+
+%simple command to insert a figure: #1 filename+path; #2 label; #3 caption
+\newcommand{\insertfigure}[3]{\begin{figure}
+ \centering\leavevmode\includegraphics{#1}\caption{#3}
+ \OClabel{#2}\end{figure}}
+
+%simple command to insert a figure: #1 filename+path; #2 label; #3 caption; #4 width
+\newcommand{\insertfigurew}[4]{\begin{figure}
+ \centering\leavevmode\includegraphics[width=#4]{#1}\caption{#3}
+ \OClabel{#2}\end{figure}}
+
+%simple command to insert a figure "here": #1 filename+path; #2 label; #3 caption; #4 width
+\newcommand{\insertfigureh}[3]{\begin{figure}[h]
+ \centering\leavevmode\includegraphics{#1}\caption{#3}
+ \OClabel{#2}\end{figure}}
+
+% a few shortcuts for vectors and matrices
+\newcommand{\ratiobot}[2]{\frac{\partial x^{#1}}{\partial x^{\prime #2}}} 
+\newcommand{\ratiotop}[2]{\frac{\partial x^{\prime #1}}{\partial x^{#2}}} 
+\newcommand{\rowtwo}[2]{\left[\begin{array}{cc}#1 & #2 \end{array}\right]}
+\newcommand{\rowthree}[3]{\left[\begin{array}{ccc} #1 & #2 & #3 \end{array}\right]} 
+\newcommand{\columntwo}[2]{\left[\begin{array}{c} #1 \\ #2 \end{array}\right]} 
+\newcommand{\columnthree}[3]{\left[\begin{array}{c} #1 \\ #2 \\ #3 \end{array}\right]} 
+\newcommand{\columnthreeb}[3]{\left(\begin{array}{c} #1 \\ #2 \\ #3 \end{array}\right)}
+\newcommand{\columnfour}[3]{\left[\begin{array}{c} #1 \\ #2 \\ #3 \\ 1 \end{array}\right]} 
+\newcommand{\columnsix}[6]{\left[\begin{array}{c} #1 \\ #2 \\ #3 \\ #4 \\ #5 \\ #6 \end{array}\right]} 
+\newcommand{\matrixtwo}[4]{\left(\begin{array}{rr}#1  & #2 \\ #3  & #4 \end{array}\right)}
+\newcommand{\matrixtwob}[4]{\left[\begin{array}{rr}#1  & #2 \\ #3  & #4 \end{array}\right]}
+\newcommand{\detertwo}[4]{\left\vert\begin{array}{rr}#1  & #2 \\ #3  & #4 \end{array}\right\vert}
+\newcommand{\deterthree}[9]{\left\vert\begin{array}{rrr}#1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9\end{array}\right\vert}
+\newcommand{\matrixtbtb}[9]{\left[\begin{array}{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9\end{array}\right]}
+\newcommand{\matrixtbt}[9]{\left(\begin{array}{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9\end{array}\right)}
+\newcommand{\matrixtbtbig}[9]{\left(\begin{array}{ccc} #1 & #2 & #3 \\[0.15in] #4 & #5 & #6 \\[0.15in] #7 & #8 & #9\end{array}\right)}
+\newcommand{\matrixtbts}[9]{\left[\begin{array}{ccc} \mu_{#1} & \mu_{#2} & \mu_{#3} \\ \mu_{#4} & \mu_{#5} & \mu_{#6} \\ \mu_{#7} & \mu_{#8} & \mu_{#9}\end{array}\right]}
+\newcommand{\mtrix}[9]{\left[\begin{array}{ccc} {#1} & {#2} &{#3} \\ {#4} & {#5} & {#6} \\ {#7} & {#8} & {#9}\end{array}\right]}
+\newcommand{\rowangle}[6]{\left(\begin{array}{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \end{array}\right)}
+\newcommand{\columnangle}[6]{\left(\begin{array}{ccc} #1 & #4 \\ #2 & #5 \\ #3 & #6 \end{array}\right)}
+
+% each chapter needs to have a 6-character identification string so that we can automate 
+% the chapter dependencies, in particular for the Foundational chapters.  
+% if \OClabel{foo} is used in a chapter, then the actual reference will be chabbr:foo; within that
+% same chapter, \OCref{foo} will typeset the correct reference, outside the chapter the reference
+% has to be called with the traditional \ref{chabbr:foo}.  The abbreviations used for all available 
+% chapters are stored in a chaptertitles.txt file in the top folder of the repository.
+\newcommand{\chabbr}{AAAAAA}
+\newcommand{\OClabel}[1]{\label{\chabbr:#1}}
+\newcommand{\OCref}[1]{\ref{\chabbr:#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% any user defined 
+% Crystallographic and other point group symbols
+\newcommand{\pg}[1]{\ifcase #1 $\quad$\or%
+    $\mathbf{1}$ (\textit{C$_1$})\or%1
+    $\bar{\mathbf{1}}$ (\textit{C$_i$})\or%2
+    $\mathbf{2}$ (\textit{C$_2$})\or%3
+    $\mathbf{m}$ (\textit{C$_{\rm s}$})\or%4
+    $\mathbf{2/m}$ (\textit{C$_{2h}$})\or%5
+    $\mathbf{222}$ (\textit{D$_2$})\or%6
+    $\mathbf{mm2}$ (\textit{C$_{2v}$})\or%7
+    $\mathbf{mmm}$ (\textit{D$_{2h}$})\or%8
+    $\mathbf{4}$ (\textit{C$_4$})\or%9
+    $\bar{\mathbf{4}}$ (\textit{S$_4$})\or%10
+    $\mathbf{4/m}$ (\textit{C$_{4h}$})\or%11
+    $\mathbf{422}$ (\textit{D$_4$})\or%12
+    $\mathbf{4mm}$ (\textit{C$_{4v}$})\or%13
+    $\bar{\mathbf{4}}\mathbf{2m}$ (\textit{D$_{2d}$})\or%14
+    $\mathbf{\hbox{\bf 4/mmm}}$ (\textit{D$_{4h}$})\or%15
+    $\mathbf{3}$ (\textit{C$_3$})\or%16
+    $\bar{\mathbf{3}}$ (\textit{C$_{3i}$})\or%17
+    $\mathbf{32}$ (\textit{D$_3$})\or%18
+    $\mathbf{3m}$ (\textit{C$_{3v}$})\or%19
+    $\bar{\mathbf{3}}\mathbf{m}$ (\textit{D$_{3d}$})\or%20
+    $\mathbf{6}$ (\textit{C$_6$})\or%21
+    $\bar{\mathbf{6}}$ (\textit{C$_{3h}$})\or%22
+    $\mathbf{6/m}$ (\textit{C$_{6h}$})\or%23
+    $\mathbf{622}$ (\textit{D$_6$})\or%24
+    $\mathbf{6mm}$ (\textit{C$_{6v}$})\or%25
+    $\bar{\mathbf{6}}\mathbf{m2}$ (\textit{D$_{3h}$})\or%26
+    $\mathbf{6/mmm}$ (\textit{D$_{6h}$})\or%27
+    $\mathbf{23}$ (\textit{T})\or%28
+    ${{\mathbf m}\bar{\mathbf 3}}$ (\textit{T$_h$})\or%29
+    $\mathbf{432}$ (\textit{O})\or%30
+    $\bar{\mathbf{4}}\mathbf{3m}$ (\textit{T$_{\rm d}$})\or%31
+    $\mathbf{m}\bar{\mathbf{3}}\mathbf{m}$ (\textit{O$_h$})\or%32
+    $\mathbf{m\overline 3 \overline 5}$ (\textit{I$_h$})\or%33
+    $\mathbf{532}$ (\textit{I})\or%34
+    ${\bar{\mathbf 5}{\bf m}}$ (\textit{D$_{5d}$})\or%35
+    $\mathbf{52}$  (\textit{D$_5$})\or%36
+    $\mathbf{5m}$ (\textit{C$_{5v}$})\or%37
+    ${\bar{\bf 5}}$ (\textit{C$_{5i}$})\or%38
+    $\mathbf{5}$ (\textit{C$_5$})\or%39
+    $\mathbf{5/m}$ (\textit{C$_{5h}$})\or%40
+    $\mathbf{10/mmm}$ (\textit{D$_{10h}$})\or%41
+    $\mathbf{8}$ (\textit{C$_8$})\or%42
+    $\mathbf{8/mmm}$ (\textit{D$_{8h}$})\or%43
+    $\mathbf{\overline{10}}$ (\textit{C$_{5h}$})\or%44
+    $\mathbf{\overline{10}}\mathbf{m2}$ (\textit{D$_{5h}$})\or%45
+    $\mathbf{10}$ (\textit{C$_{10}$})\or%46
+    $\mathbf{10/m}$ (\textit{C$_{10h}$})\or%47
+    $\mathbf{10mm}$ (\textit{C$_{10v}$})\or%48
+    $\mathbf{10\,22}$ (\textit{D$_{10}$})\or%49
+    $\mathbf{\overline{8}}$ (\textit{S$_{8}$})\or%50
+    $\mathbf{8/m}$ (\textit{C$_{8h}$})\or%51
+    $\mathbf{822}$ (\textit{D$_{8}$})\or%52
+    $\mathbf{8mm}$ (\textit{C$_{8v}$})\or%53
+    $\mathbf{\overline{8}2m}$ (\textit{D$_{4d}$})\or%54
+    $\mathbf{12}$ (\textit{C$_{12}$})\or%55
+    $\mathbf{\overline{12}}$ (\textit{S$_{12}$})\or%56
+    $\mathbf{12/m}$ (\textit{C$_{12h}$})\or%57
+    $\mathbf{12\,22}$ (\textit{D$_{12}$})\or%58
+    $\mathbf{12mm}$ (\textit{C$_{12v}$})\or%59
+    $\mathbf{\overline{12}2m}$ (\textit{D$_{6d}$})\or%60
+    $\mathbf{12/mmm}$ (\textit{D$_{12h}$})\or%61
+    $\mathbf{n/mmm}$ (\textit{D$_{nh}$})\or%62
+    $\mathbf{n22}$ (\textit{D$_{n}$})\or%63
+    $\mathbf{\overline{n}2m}$ (\textit{D$_{\frac{n}{2}d}$})\or%64
+    $\mathbf{nmm}$ (\textit{C$_{nv}$})\or%65
+    $\mathbf{n/m}$ (\textit{C$_{nh}$})\or%66
+    $\mathbf{\frac{\bar{n}}{2}m}$ (\textit{D$_{\frac{n}{2}d}$})\or%67
+    $\mathbf{n}$ (\textit{C$_{n}$})\or%68
+    $\mathbf{\overline{n}}$ (\textit{S$_{n}$})\or%69
+    $\mathbf{\frac{n}{2}2}$  (\textit{D$_{\frac{n}{2}}$})\or%70
+    $\mathbf{\frac{n}{2}m}$  (\textit{C$_{\frac{n}{2}h}$})\or%71
+    $\mathbf{\frac{\bar{n}}{2}}$ (\textit{C$_{\frac{n}{2}i}$})\or%72
+    $\mathbf{\frac{n}{2}}$ (\textit{C$_{\frac{n}{2}}$})\or%73
+    $\mathbf{7}$ (\textit{C$_{7}$})\or%74
+   \fi}
+
+\def\chbar#1{\mbox{$\bar{\bf#1}$}}
+\newcommand{\spgr}[1]{\ifcase #1 $\quad$\or% empty space
+$\mathbf{P1}$ (\textit{C$_1^1$})\or %1
+$\mathbf{P\chbar{1}}$ (\textit{C$_i^1$})\or %2
+$\mathbf{P2}$ (\textit{C$_2^1$})\or %3
+$\mathbf{P2_1}$ (\textit{C$_2^2$})\or %4
+$\mathbf{C2}$ (\textit{C$_2^3$})\or %5
+$\mathbf{Pm}$ (\textit{C$_s^1$})\or %6
+$\mathbf{Pc}$ (\textit{C$_s^2$})\or %7
+$\mathbf{Cm}$ (\textit{C$_s^3$})\or %8
+$\mathbf{Cc}$ (\textit{C$_s^4$})\or %9
+$\mathbf{P2/m}$ (\textit{C$_{2h}^1$})\or %10
+$\mathbf{P2_1/m}$ (\textit{C$_{2h}^2$})\or %11
+$\mathbf{C2/m}$ (\textit{C$_{2h}^3$})\or %12
+$\mathbf{P2/c}$ (\textit{C$_{2h}^4$})\or %13
+$\mathbf{P2_1/c}$ (\textit{C$_{2h}^5$})\or %14
+$\mathbf{C2/c}$ (\textit{C$_{2h}^6$})\or %15
+$\mathbf{P222}$ (\textit{D$_2^1$})\or %16
+$\mathbf{P222_1}$ (\textit{D$_2^2$})\or %17
+$\mathbf{P2_12_12}$ (\textit{D$_2^3$})\or %18
+$\mathbf{P2_12_12_1}$ (\textit{D$_2^4$})\or %19
+$\mathbf{C222_1}$ (\textit{D$_2^5$})\or %20
+$\mathbf{C222}$ (\textit{D$_2^6$})\or %21
+$\mathbf{F222}$ (\textit{D$_2^7$})\or %22
+$\mathbf{I222}$ (\textit{D$_2^8$})\or %23
+$\mathbf{I2_12_12_1}$ (\textit{D$_2^9$})\or %24
+$\mathbf{Pmm2}$ (\textit{C$_{2v}^1$})\or %25
+$\mathbf{Pmc2_1}$ (\textit{C$_{2v}^2$})\or %26
+$\mathbf{Pcc2}$ (\textit{C$_{2v}^3$})\or %27
+$\mathbf{Pma2}$ (\textit{C$_{2v}^4$})\or %28
+$\mathbf{Pca2_1}$ (\textit{C$_{2v}^5$})\or %29
+$\mathbf{Pnc2}$ (\textit{C$_{2v}^6$})\or %30
+$\mathbf{Pmn2_1}$ (\textit{C$_{2v}^7$})\or %31
+$\mathbf{Pba2}$ (\textit{C$_{2v}^8$})\or %32
+$\mathbf{Pna2_1}$ (\textit{C$_{2v}^9$})\or %33
+$\mathbf{Pnn2}$ (\textit{C$_{2v}^{10}$})\or %34
+$\mathbf{Cmm2}$ (\textit{C$_{2v}^{11}$})\or %35
+$\mathbf{Cmc2_1}$ (\textit{C$_{2v}^{12}$})\or %36
+$\mathbf{Ccc2}$ (\textit{C$_{2v}^{13}$})\or %37
+$\mathbf{Amm2}$ (\textit{C$_{2v}^{14}$})\or %38
+$\mathbf{Abm2}$ (\textit{C$_{2v}^{15}$})\or %39
+$\mathbf{Ama2}$ (\textit{C$_{2v}^{16}$})\or %40
+$\mathbf{Aba2}$ (\textit{C$_{2v}^{17}$})\or %41
+$\mathbf{Fmm2}$ (\textit{C$_{2v}^{18}$})\or %42
+$\mathbf{Fdd2}$ (\textit{C$_{2v}^{19}$})\or %43
+$\mathbf{Imm2}$ (\textit{C$_{2v}^{20}$})\or %44
+$\mathbf{Iba2}$ (\textit{C$_{2v}^{21}$})\or %45
+$\mathbf{Ima2}$ (\textit{C$_{2v}^{22}$})\or %46
+$\mathbf{Pmmm}$ (\textit{D$_{2h}^1$})\or %47
+$\mathbf{Pnnn}$ (\textit{D$_{2h}^2$})\or %48
+$\mathbf{Pccm}$ (\textit{D$_{2h}^3$})\or %49
+$\mathbf{Pban}$ (\textit{D$_{2h}^4$})\or %50
+$\mathbf{Pmma}$ (\textit{D$_{2h}^5$})\or %51
+$\mathbf{Pnna}$ (\textit{D$_{2h}^6$})\or %52
+$\mathbf{Pmna}$ (\textit{D$_{2h}^7$})\or %53
+$\mathbf{Pcca}$ (\textit{D$_{2h}^8$})\or %54
+$\mathbf{Pbam}$ (\textit{D$_{2h}^9$})\or %55
+$\mathbf{Pccn}$ (\textit{D$_{2h}^{10}$})\or %56
+$\mathbf{Pbcm}$ (\textit{D$_{2h}^{11}$})\or %57
+$\mathbf{Pnnm}$ (\textit{D$_{2h}^{12}$})\or %58
+$\mathbf{Pmmn}$ (\textit{D$_{2h}^{13}$})\or %59
+$\mathbf{Pbcn}$ (\textit{D$_{2h}^{14}$})\or %60
+$\mathbf{Pbca}$ (\textit{D$_{2h}^{15}$})\or %61
+$\mathbf{Pnma}$ (\textit{D$_{2h}^{16}$})\or %62
+$\mathbf{Cmcm}$ (\textit{D$_{2h}^{17}$})\or %63
+$\mathbf{Cmca}$ (\textit{D$_{2h}^{18}$})\or %64
+$\mathbf{Cmmm}$ (\textit{D$_{2h}^{19}$})\or %65
+$\mathbf{Cccm}$ (\textit{D$_{2h}^{20}$})\or %66
+$\mathbf{Cmma}$ (\textit{D$_{2h}^{21}$})\or %67
+$\mathbf{Ccca}$ (\textit{D$_{2h}^{22}$})\or %68
+$\mathbf{Fmmm}$ (\textit{D$_{2h}^{23}$})\or %69
+$\mathbf{Fddd}$ (\textit{D$_{2h}^{24}$})\or %70
+$\mathbf{Immm}$ (\textit{D$_{2h}^{25}$})\or %71
+$\mathbf{Ibam}$ (\textit{D$_{2h}^{26}$})\or %72
+$\mathbf{Ibca}$ (\textit{D$_{2h}^{27}$})\or %73
+$\mathbf{Imma}$ (\textit{D$_{2h}^{28}$})\or %74
+$\mathbf{P4}$  (\textit{C$_4^1$})\or %75
+$\mathbf{P4_1}$  (\textit{C$_4^2$})\or %76
+$\mathbf{P4_2}$  (\textit{C$_4^3$})\or %77
+$\mathbf{P4_3}$  (\textit{C$_4^4$})\or %78
+$\mathbf{I4}$  (\textit{C$_4^5$})\or %79
+$\mathbf{I4_1}$  (\textit{C$_4^6$})\or %80
+$\mathbf{P\chbar{4}}$ (\textit{S$_4^1$})\or %81
+$\mathbf{I\chbar{4}}$ (\textit{S$_4^2$})\or %82
+$\mathbf{P4/m}$ (\textit{C$_{4h}^1$})\or %83
+$\mathbf{P4_2/m}$ (\textit{C$_{4h}^2$})\or %84
+$\mathbf{P4/n}$ (\textit{C$_{4h}^3$})\or %85
+$\mathbf{P4_2/n}$ (\textit{C$_{4h}^4$})\or %86
+$\mathbf{I4/m}$ (\textit{C$_{4h}^5$})\or %87
+$\mathbf{I4_1/a}$ (\textit{C$_{4h}^6$})\or %88
+$\mathbf{P422}$ (\textit{D$_4^1$})\or %89
+$\mathbf{P42_12}$ (\textit{D$_4^2$})\or %90
+$\mathbf{P4_122}$ (\textit{D$_4^3$})\or %91
+$\mathbf{P4_12_12}$ (\textit{D$_4^4$})\or %92
+$\mathbf{P4_222}$ (\textit{D$_4^5$})\or %93
+$\mathbf{P4_22_12}$ (\textit{D$_4^6$})\or %94
+$\mathbf{P4_322}$ (\textit{D$_4^7$})\or %95
+$\mathbf{P4_32_12}$ (\textit{D$_4^8$})\or %96
+$\mathbf{I422}$ (\textit{D$_4^9$})\or %97
+$\mathbf{I4_122}$ (\textit{D$_4^{10}$})\or %98
+$\mathbf{P4mm}$ (\textit{C$_{4v}^1$})\or %99
+$\mathbf{P4bm}$ (\textit{C$_{4v}^2$})\or %100
+$\mathbf{P4_2cm}$ (\textit{C$_{4v}^3$})\or %101
+$\mathbf{P4_2nm}$ (\textit{C$_{4v}^4$})\or %102
+$\mathbf{P4cc}$ (\textit{C$_{4v}^5$})\or %103
+$\mathbf{P4nc}$ (\textit{C$_{4v}^6$})\or %104
+$\mathbf{P4_2mc}$ (\textit{C$_{4v}^7$})\or %105
+$\mathbf{P4_2bc}$ (\textit{C$_{4v}^8$})\or %106
+$\mathbf{I4mm}$ (\textit{C$_{4v}^9$})\or %107
+$\mathbf{I4cm}$ (\textit{C$_{4v}^{10}$})\or %108
+$\mathbf{I4_1md}$ (\textit{C$_{4v}^{11}$})\or %109
+$\mathbf{I4_1cd}$ (\textit{C$_{4v}^{12}$})\or %110
+$\mathbf{P\chbar{4}2m}$ (\textit{D$_{2d}^1$})\or %111
+$\mathbf{P\chbar{4}2c}$ (\textit{D$_{2d}^2$})\or %112
+$\mathbf{P\chbar{4}2_1m}$ (\textit{D$_{2d}^3$})\or %113
+$\mathbf{P\chbar{4}2_1c}$ (\textit{D$_{2d}^4$})\or %114
+$\mathbf{P\chbar{4}m2}$  (\textit{D$_{2d}^5$})\or %115
+$\mathbf{P\chbar{4}c2}$  (\textit{D$_{2d}^6$})\or %116
+$\mathbf{P\chbar{4}b2}$  (\textit{D$_{2d}^7$})\or %117
+$\mathbf{P\chbar{4}n2}$  (\textit{D$_{2d}^8$})\or %118
+$\mathbf{I\chbar{4}m2}$  (\textit{D$_{2d}^9$})\or %119
+$\mathbf{I\chbar{4}c2}$  (\textit{D$_{2d}^{10}$})\or %120
+$\mathbf{I\chbar{4}2m}$  (\textit{D$_{2d}^{11}$})\or %121
+$\mathbf{I\chbar{4}2d}$  (\textit{D$_{2d}^{12}$})\or %122
+$\mathbf{P4/mmm}$  (\textit{D$_{4h}^1$})\or %123
+$\mathbf{P4/mcc}$  (\textit{D$_{4h}^2$})\or %124
+$\mathbf{P4/nbm}$  (\textit{D$_{4h}^3$})\or %125
+$\mathbf{P4/nnc}$  (\textit{D$_{4h}^4$})\or %126
+$\mathbf{P4/mbm}$  (\textit{D$_{4h}^5$})\or %127
+$\mathbf{P4/mnc}$  (\textit{D$_{4h}^6$})\or %128
+$\mathbf{P4/nmm}$  (\textit{D$_{4h}^7$})\or %129
+$\mathbf{P4/ncc}$  (\textit{D$_{4h}^8$})\or %130
+$\mathbf{P4_2/mmc}$  (\textit{D$_{4h}^9$})\or %131
+$\mathbf{P4_2/mcm}$  (\textit{D$_{4h}^{10}$})\or %132
+$\mathbf{P4_2/nbc}$  (\textit{D$_{4h}^{11}$})\or %133
+$\mathbf{P4_2/nnm}$  (\textit{D$_{4h}^{12}$})\or %134
+$\mathbf{P4_2/mbc}$  (\textit{D$_{4h}^{13}$})\or %135
+$\mathbf{P4_2/mnm}$  (\textit{D$_{4h}^{14}$})\or %136
+$\mathbf{P4_2/nmc}$  (\textit{D$_{4h}^{15}$})\or %137
+$\mathbf{P4_2/ncm}$  (\textit{D$_{4h}^{16}$})\or %138
+$\mathbf{I4/mmm}$  (\textit{D$_{4h}^{17}$})\or %139
+$\mathbf{I4/mcm}$  (\textit{D$_{4h}^{18}$})\or %140
+$\mathbf{I4_1/amd}$  (\textit{D$_{4h}^{19}$})\or %141
+$\mathbf{I4_1/acd}$  (\textit{D$_{4h}^{20}$})\or %142
+$\mathbf{P3}$ (\textit{C$_3^1$})\or %143
+$\mathbf{P3_1}$ (\textit{C$_3^2$})\or %144
+$\mathbf{P3_2}$ (\textit{C$_3^3$})\or %145
+$\mathbf{R3}$ (\textit{C$_3^4$})\or %146
+$\mathbf{P\chbar{3}}$ (\textit{C$_{3i}^1$})\or %147
+$\mathbf{R\chbar{3}}$  (\textit{C$_{3i}^2$})\or %148
+$\mathbf{P312}$ (\textit{D$_3^1$})\or %149
+$\mathbf{P321}$ (\textit{D$_3^2$})\or %150
+$\mathbf{P3_112}$ (\textit{D$_3^3$})\or %151
+$\mathbf{P3_121}$ (\textit{D$_3^4$})\or %152
+$\mathbf{P3_212}$ (\textit{D$_3^5$})\or %153
+$\mathbf{P3_221}$ (\textit{D$_3^6$})\or %154
+$\mathbf{R32}$ (\textit{D$_3^7$})\or %155
+$\mathbf{P3m1}$ (\textit{C$_{3v}^1$})\or %156
+$\mathbf{P31m}$ (\textit{C$_{3v}^2$})\or %157
+$\mathbf{P3c1}$ (\textit{C$_{3v}^3$})\or %158
+$\mathbf{P31c}$ (\textit{C$_{3v}^4$})\or %159
+$\mathbf{R3m}$ (\textit{C$_{3v}^5$})\or %160
+$\mathbf{R3c}$ (\textit{C$_{3v}^6$})\or %161
+$\mathbf{P\chbar{3}1m}$ (\textit{D$_{3d}^1$})\or %162
+$\mathbf{P\chbar{3}1c}$ (\textit{D$_{3d}^2$})\or %163
+$\mathbf{P\chbar{3}m1}$ (\textit{D$_{3d}^3$})\or %164
+$\mathbf{P\chbar{3}c1}$ (\textit{D$_{3d}^4$})\or %165
+$\mathbf{R\chbar{3}m}$ (\textit{D$_{3d}^5$})\or %166
+$\mathbf{R\chbar{3}c}$ (\textit{D$_{3d}^6$})\or %167
+$\mathbf{P6}$  (\textit{C$_6^1$})\or %168
+$\mathbf{P6_1}$  (\textit{C$_6^2$})\or %169
+$\mathbf{P6_5}$  (\textit{C$_6^3$})\or %170
+$\mathbf{P6_2}$  (\textit{C$_6^4$})\or %171
+$\mathbf{P6_4}$  (\textit{C$_6^5$})\or %172
+$\mathbf{P6_3}$  (\textit{C$_6^6$})\or %173
+$\mathbf{P\chbar{6}}$ (\textit{C$_{3h}^1$})\or %174
+$\mathbf{P6/m}$ (\textit{C$_{6h}^1$})\or %175
+$\mathbf{P6_3/m}$ (\textit{C$_{6h}^2$})\or %176
+$\mathbf{P622}$ (\textit{D$_6^1$})\or %177
+$\mathbf{P6_122}$ (\textit{D$_6^2$})\or %178
+$\mathbf{P6_522}$ (\textit{D$_6^3$})\or %179
+$\mathbf{P6_222}$ (\textit{D$_6^4$})\or %180
+$\mathbf{P6_422}$ (\textit{D$_6^5$})\or %181
+$\mathbf{P6_322}$ (\textit{D$_6^6$})\or %182
+$\mathbf{P6mm}$ (\textit{C$_{6v}^1$})\or %183
+$\mathbf{P6cc}$ (\textit{C$_{6v}^2$})\or %184
+$\mathbf{P6_3cm}$ (\textit{C$_{6v}^3$})\or %185
+$\mathbf{P6_3mc}$ (\textit{C$_{6v}^4$})\or %186
+$\mathbf{P\chbar{6}m2}$ (\textit{D$_{3h}^1$})\or %187
+$\mathbf{P\chbar{6}c2}$ (\textit{D$_{3h}^2$})\or %188
+$\mathbf{P\chbar{6}2m}$ (\textit{D$_{3h}^3$})\or %189
+$\mathbf{P\chbar{6}2c}$ (\textit{D$_{3h}^4$})\or %190
+$\mathbf{P6/mmm}$ (\textit{D$_{6h}^1$})\or %191
+$\mathbf{P6/mcc}$ (\textit{D$_{6h}^2$})\or %192
+$\mathbf{P6_3/mcm}$ (\textit{D$_{6h}^3$})\or %193
+$\mathbf{P6_3/mmc}$ (\textit{D$_{6h}^4$})\or %194
+$\mathbf{P23}$ (\textit{T}$^1$)\or %195
+$\mathbf{F23}$ (\textit{T}$^2$)\or %196
+$\mathbf{I23}$ (\textit{T}$^3$)\or %197
+$\mathbf{P2_13}$ (\textit{T}$^4$)\or %198
+$\mathbf{I2_13}$ (\textit{T}$^5$)\or %199
+$\mathbf{Pm\chbar{3}}$ (\textit{T$_h^1$})\or %200
+$\mathbf{Pn\chbar{3}}$ (\textit{T$_h^2$})\or %201
+$\mathbf{Fm\chbar{3}}$ (\textit{T$_h^3$})\or %202
+$\mathbf{Fd\chbar{3}}$ (\textit{T$_h^4$})\or %203
+$\mathbf{Im\chbar{3}}$ (\textit{T$_h^5$})\or %204
+$\mathbf{Pa\chbar{3}}$ (\textit{T$_h^6$})\or %205
+$\mathbf{Ia\chbar{3}}$ (\textit{T$_h^7$})\or %206
+$\mathbf{P432}$ (\textit{O}$^1$)\or %207
+$\mathbf{P4_232}$ (\textit{O}$^2$)\or %208
+$\mathbf{F432}$ (\textit{O}$^3$)\or %209
+$\mathbf{F4_132}$ (\textit{O}$^4$)\or %210
+$\mathbf{I432}$ (\textit{O}$^5$)\or %211
+$\mathbf{P4_332}$ (\textit{O}$^6$)\or %212
+$\mathbf{P4_132}$ (\textit{O}$^7$)\or %213
+$\mathbf{I4_132}$ (\textit{O}$^8$)\or %214
+$\mathbf{P\chbar{4}3m}$ (\textit{T$_d^1$})\or %215
+$\mathbf{F\chbar{4}3m}$ (\textit{T$_d^2$})\or %216
+$\mathbf{I\chbar{4}3m}$ (\textit{T$_d^3$})\or %217
+$\mathbf{P\chbar{4}3n}$ (\textit{T$_d^4$})\or %218
+$\mathbf{F\chbar{4}3c}$ (\textit{T$_d^5$})\or %219
+$\mathbf{I\chbar{4}3d}$ (\textit{T$_d^6$})\or %220
+$\mathbf{Pm\chbar{3}m}$ (\textit{O$_h^1$})\or %221
+$\mathbf{Pn\chbar{3}n}$ (\textit{O$_h^2$})\or %222
+$\mathbf{Pm\chbar{3}n}$ (\textit{O$_h^3$})\or %223
+$\mathbf{Pn\chbar{3}m}$ (\textit{O$_h^4$})\or %224
+$\mathbf{Fm\chbar{3}m}$ (\textit{O$_h^5$})\or %225
+$\mathbf{Fm\chbar{3}c}$ (\textit{O$_h^6$})\or %226
+$\mathbf{Fd\chbar{3}m}$ (\textit{O$_h^7$})\or %227
+$\mathbf{Fd\chbar{3}c}$ (\textit{O$_h^8$})\or %228
+$\mathbf{Im\chbar{3}m}$ (\textit{O$_h^9$})\or %229
+$\mathbf{Ia\chbar{3}d}$ (\textit{O$_h^{10}$})\or %230
+\fi}
+
+\newcommand{\plane}[1]{\ensuremath{(#1)}}
+\newcommand{\direction}[1]{\ensuremath{[#1]}}
+\newcommand{\planef}[1]{\ensuremath{\{#1\}}}
+\newcommand{\directionf}[1]{\ensuremath{\langle #1\rangle}}
+\newcommand{\fcc}{\textit{fcc}}
+\newcommand{\hcp}{\textit{hcp}}
+\newcommand{\ccp}{\textit{ccp}}
+\newcommand{\bcc}{\textit{bcc}}
+\newcommand{\scu}{\textit{sc}}
+
+% Euler integration
+\newcommand{\eulerintegral}{\frac{1}{8\pi^2}\int_0^{2\pi}\!\!\!\!\mathrm{d}\varphi_2\int_0^{\pi}\!\!\!\!\mathrm{d}\Phi\int_0^{2\pi}\!\!\!\!\mathrm{d}\varphi_1\,\sin\Phi\,\,}
+\newcommand{\eulerintegraln}{\int_0^{2\pi}\!\!\!\!\mathrm{d}\varphi_2\int_0^{\pi}\!\!\!\!\mathrm{d}\Phi\int_0^{2\pi}\!\!\!\!\mathrm{d}\varphi_1\,\sin\Phi\,\,}
+\newcommand{\indexit}[1]{\textit{#1}\index{#1}}
+

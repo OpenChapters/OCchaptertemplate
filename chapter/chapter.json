@@ -1,0 +1,20 @@
+{
+  "title": "REPLACE: Your Chapter Title",
+  "authors": [
+    "REPLACE: Your Name"
+  ],
+  "description": "REPLACE: A brief description of this chapter.",
+  "toc": [
+    "Introduction",
+    "Methods",
+    "Worked Examples"
+  ],
+  "entry_file": "MyChapter.tex",
+  "cover_image": "cover.png",
+  "keywords": [],
+  "chapter_type": "topical",
+  "chabbr": "MYCHAP",
+  "depends_on": [],
+  "discipline": "mse",
+  "published": false
+}

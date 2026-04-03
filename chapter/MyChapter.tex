@@ -1,0 +1,128 @@
+%
+% ###################################################################
+%  Copyright (c) 2025, REPLACE: Your Name
+%  Editors: A.D. Rollett & M. De Graef
+%  All rights reserved.
+%
+% Licensed under the Creative Commons CC BY-NC-SA 4.0 License,
+% hereafter referred to as the "License"; you may not use this
+% document except in compliance with the License. You may obtain
+% a copy of the License at
+%     https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+% Unless required by applicable law or agreed to in writing, all
+% material distributed under the License is distributed on an
+% "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+% either express or implied. See the License for the specific
+% language governing permissions and limitations under the License.
+% ###################################################################
+
+% ###################################################################
+% AUTHOR SETUP — Edit the lines below
+% ###################################################################
+
+% Uncomment the next line ONLY if this is a foundational chapter:
+%\corechapter{Yes}
+
+% Your name and affiliation (appears below the chapter title):
+\OCchapterauthor{REPLACE: Your Name, Your University}
+
+% Chapter abbreviation: choose a UNIQUE 6-character uppercase code.
+% This is used as a prefix for all labels in this chapter.
+% Examples: LINALG, TENSOR, NUMSYS, PROJTS
+\renewcommand{\chabbr}{MYCHAP}
+
+% Chapter header image (2480 x 1240 pixels, 300 dpi, RGB format).
+% Replace \noheaderimage with your header filename (e.g., MYCHAPheader.pdf).
+% The file should be placed in chapter/pdf/.
+\chapterimage{\noheaderimage}
+
+% ###################################################################
+% CHAPTER TITLE — Edit the title below
+% ###################################################################
+\chapter{My Chapter Title}\label{\chabbr:ch:MyChapter}
+
+% Register author information (repeat for each co-author)
+\writeauthor{\chabbr:ch:MyChapter}{My Chapter Title}{REPLACE: Last}{REPLACE: First}{REPLACE: Department}{REPLACE: University}{REPLACE: email@example.com}{REPLACE: https://homepage.example.com}
+
+% ###################################################################
+% LEARNING OBJECTIVES
+% ###################################################################
+% Each chapter begins with Learning Objectives.  Each objective should:
+% - Contain an active verb (Learn, Understand, Derive, Apply, etc.)
+% - Link to the relevant section using the \chabbr:sec:label format
+% - Use the OCBurntOrange color for the reference
+\begin{learningobjectives}
+{\begin{itemize}
+    \item[{\color{OCBurntOrange}\ref{\chabbr:sec:introduction}:}] Understand the basic concepts presented in this chapter
+    \item[{\color{OCBurntOrange}\ref{\chabbr:sec:methods}:}] Learn the methods used for analysis
+    \item[{\color{OCBurntOrange}\ref{\chabbr:sec:examples}:}] Apply the concepts to worked examples
+\end{itemize}}
+\end{learningobjectives}
+
+% ###################################################################
+% CHAPTER CONTENT STARTS HERE
+% ###################################################################
+
+\section{Introduction}\label{\chabbr:sec:introduction}
+
+This is the introduction to your chapter.  You can use standard \LaTeX\ commands
+for formatting, equations, figures, and tables.  All labels in this chapter should
+use the prefix defined by \texttt{\textbackslash chabbr}, which is \texttt{\chabbr}
+for this template.
+
+The label format is \texttt{\textbackslash chabbr:TYPE:name}, where TYPE is one of:
+\texttt{ch} (chapter), \texttt{sec} (section), \texttt{ssec} (subsection),
+\texttt{eq} (equation), \texttt{fig} (figure), \texttt{tb} (table).
+
+\subsection{An Example Subsection}\label{\chabbr:ssec:example}
+
+Here is an example of an inline equation: $E = mc^2$.  And here is a displayed
+equation with a label:
+\begin{equation}
+    \mathbf{F} = m\mathbf{a}
+    \label{\chabbr:eq:newton}
+\end{equation}
+We can refer to Eq.~\ref{\chabbr:eq:newton} anywhere in this chapter.
+
+% ###################################################################
+\section{Methods}\label{\chabbr:sec:methods}
+
+This section describes the methods.  Here is an example of a figure reference.
+Figure~\ref{\chabbr:fig:example} shows an example plot from the number systems
+chapter.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{\graphicspath figcomplex.pdf}
+    \caption{\label{\chabbr:fig:example}An example figure showing the complex
+    plane.  Replace this with your own figure.  Place PDF figures in the
+    \texttt{chapter/pdf/} directory.}
+\end{figure}
+
+Here is an example of a table:
+\begin{table}[htbp]
+    \centering
+    \caption{\label{\chabbr:tb:example}An example table with three columns.}
+    \begin{tabular}{lcc}
+        \toprule
+        Property & Symbol & Units \\
+        \midrule
+        Force & $F$ & N \\
+        Mass & $m$ & kg \\
+        Acceleration & $a$ & m/s$^2$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ###################################################################
+\section{Worked Examples}\label{\chabbr:sec:examples}
+
+This section contains worked examples.  You can use the
+\texttt{OCexample} environment for formatted examples:
+
+% If you want to cite a reference, use \cite{} with a key from
+% chapter/chaptercitations.bib.  Example: \cite{DeGraef2003}.
+
+% ###################################################################
+% END OF CHAPTER
+% ###################################################################

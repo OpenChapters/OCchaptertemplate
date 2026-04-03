@@ -1,0 +1,31 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.idx
+*.ilg
+*.ind
+*.log
+*.out
+*.ptc
+*.toc
+*.run.xml
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+main-authors.aux
+
+# Generated PDF (rebuild from source)
+main.pdf
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor files
+*.swp
+*~
+.vscode/

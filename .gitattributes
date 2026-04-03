@@ -1,0 +1,15 @@
+# Normalize line endings (LF in repo, native on checkout)
+* text=auto
+*.tex text
+*.bib text
+*.json text
+*.md text
+*.sty text
+*.ins text
+*.ist text
+
+# Binary files
+*.pdf binary
+*.eps binary
+*.png binary
+*.jpg binary

@@ -1,0 +1,69 @@
+% !TEX TS-program = arara
+% arara: clean: {files: ['main-authors.aux'] }
+% arara: pdflatex: { shell: yes }
+% arara: makeindex: { style: style/StyleInd.ist, output: ind, log: ilg, input: idx }
+% arara: biber
+% arara: pdflatex: { shell: yes }
+% arara: pdflatex: { shell: yes }
+% arara: clean: { extensions: [aux, bbl, bcf, blg, idx, ilg, ind, log, ptc, toc]}
+% arara: clean: { files: ['main.run.xml'] }
+%!TEX encoding = UTF-8 Unicode
+%
+% ###################################################################
+% OpenChapters — Standalone Chapter Template
+%
+% This main.tex file typesets a single chapter for preview and editing.
+% To compile, run:  arara -w main.tex
+% (or use your editor's build button if it supports arara)
+%
+% Manual compilation alternative (if arara is not available):
+%   pdflatex -shell-escape main
+%   makeindex -s style/StyleInd.ist main
+%   biber main
+%   pdflatex -shell-escape main
+%   pdflatex -shell-escape main
+%
+% Licensed under the Creative Commons CC BY-NC-SA 4.0 License.
+% ###################################################################
+
+\documentclass[11pt,fleqn,A4paper]{book}
+
+% Load the OpenChapters style from the style/ directory
+\makeatletter
+\def\input@path{{style/}}
+\makeatother
+\usepackage{OpenChapters}
+\usepackage{arara}
+
+% Figures are stored in chapter/pdf/
+\renewcommand{\chaptergraphicspath}{chapter/pdf/}
+\renewcommand{\graphicspath}{chapter/pdf/}
+\newcommand{\isHTML}{No}
+\newcommand{\isEPUB}{No}
+
+% User-defined commands from the style package
+\input{style/preamble.ins}
+
+% Bibliography for this chapter
+\addbibresource{chapter/chaptercitations.bib}
+
+% OpenChapters macro
+\newcommand{\OC}{\textsf{OpenChapters}}
+
+\begin{document}
+
+% Simplified front matter for standalone chapter preview
+\input{matter/Frontmatter}
+
+% Open the authors file for writing
+\immediate\openout\authorfile=\jobname-authors.aux%
+
+% =====================================================================
+% YOUR CHAPTER — change the path below to match your chapter filename
+% =====================================================================
+\include{chapter/MyChapter}
+
+% Post matter (bibliography and index)
+\input{matter/Postmatter}
+
+\end{document}
