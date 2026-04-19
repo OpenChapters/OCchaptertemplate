@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68.0", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "occonvert"
+version = "0.1.0"
+description = "Convert documents (.docx, .pptx, .md) to OpenChapters LaTeX format"
+requires-python = ">=3.10"
+license = "CC-BY-NC-SA-4.0"
+authors = [
+    { name = "Marc De Graef" },
+    { name = "Anthony D. Rollett" },
+]
+keywords = ["latex", "conversion", "openchapters", "docx", "pptx", "markdown"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+]
+dependencies = [
+    "markdown-it-py>=3.0",
+    "python-docx>=1.1",
+    "python-pptx>=1.0",
+    "Pillow>=10.0",
+    "img2pdf>=0.5",
+    "lxml>=5.0",
+]
+
+[project.scripts]
+occonvert = "occonvert.cli:main"
+occonvert-gui = "occonvert.gui:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+include = ["occonvert*"]

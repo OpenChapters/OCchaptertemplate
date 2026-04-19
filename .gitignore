@@ -49,3 +49,16 @@ AuthorGuide/AuthorGuidelines.fdb_latexmk
 AuthorGuide/AuthorGuidelines.bcf
 AuthorGuide/AuthorGuidelines.aux
 
+# Python (tools/occonvert)
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.so
+.pytest_cache/
+
+# OCconvert output
+tools/occonvert/output/

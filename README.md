@@ -220,6 +220,23 @@ The editors will:
 - Set `published: true` in `chapter.json`
 - Merge your chapter into the OpenChapters catalog
 
+## Converting Existing Documents
+
+If you have existing course notes in Word, PowerPoint, or Markdown format, the **OCconvert** tool (in `tools/occonvert/`) can generate a first-draft LaTeX chapter file that follows the OpenChapters template. See `tools/occonvert/OCconvert.md` for details.
+
+```bash
+# Set up (once)
+conda create -n occonvert python=3.12 -y
+conda activate occonvert
+cd tools/occonvert
+pip install -e .
+
+# Convert a document
+occonvert my_notes.docx -o ../../chapter --chabbr MYNOTE
+```
+
+The generated file will need editing — learning objectives, figure replacements, and index entries must be added by the author — but the structural conversion saves substantial time.
+
 ## Repository Structure
 
 ```
@@ -241,6 +258,12 @@ OCchaptertemplate/
 │   ├── Frontmatter.tex
 │   ├── Postmatter.tex
 │   └── pdf/
+├── tools/
+│   └── occonvert/           Document-to-LaTeX conversion tool
+│       ├── occonvert/       Python package source
+│       ├── tests/           Test suite and fixtures
+│       ├── pyproject.toml   Package configuration
+│       └── OCconvert.md     Feasibility study and implementation plan
 ├── .gitignore
 ├── .gitattributes
 ├── LICENSE                  CC BY-NC-SA 4.0
