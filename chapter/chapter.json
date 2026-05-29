@@ -16,5 +16,8 @@
   "chabbr": "MYCHAP",
   "depends_on": [],
   "discipline": "mse",
-  "published": false
+  "published": false,
+  "author_urls": [
+    "http://some_link.html"
+  ]
 }
