@@ -15,6 +15,7 @@
   "chapter_type": "topical",
   "chabbr": "MYCHAP",
   "depends_on": [],
+  "related_to": [],
   "version": "1.0",
   "discipline": "mse",
   "published": false,
