@@ -530,8 +530,16 @@ innerbottommargin=5pt]{cBox}
 \usepackage{etoolbox}  % for string comparisons
 \newcommand{\thechapterimage}{}%
 \newcommand{\chapterimage}[1]{\renewcommand{\thechapterimage}{#1}}%
+\newif\ifOC@firstauthor \OC@firstauthortrue
 \newcommand{\theOCchapterauthor}{}%
-\newcommand{\OCchapterauthor}[1]{\renewcommand{\theOCchapterauthor}{#1}}%
+% \OCchapterauthor may be called once per author; each extra call adds a
+% stacked line (a single call behaves exactly as before).
+\newcommand{\OCchapterauthor}[1]{%
+  \ifOC@firstauthor
+    \appto\theOCchapterauthor{#1}\OC@firstauthorfalse
+  \else
+    \appto\theOCchapterauthor{\\#1}%
+  \fi}%
 \newcommand{\nono}{No}
 \newcommand{\thecorechapter}{\nono}%
 \newcommand{\corechapter}[1]{\renewcommand{\thecorechapter}{#1}}%
@@ -553,8 +561,8 @@ innerbottommargin=5pt]{cBox}
 \draw[anchor=west] (\Gm@lmargin+.3cm,-7cm) node {\huge\sffamily\bfseries\color{black}\thechapter. #1\strut};
 % chapter author name and affiliation
 %\draw[anchor=west] (\Gm@lmargin+2.5cm,-9cm) node [line width=1pt,rounded corners=10pt,draw=ocre,fill=white,fill opacity=0.5,inner sep=10pt]{\strut\makebox[22cm]{}};
-\draw[anchor=west] (\Gm@lmargin+2.5cm,-9cm) node [line width=1pt,rounded corners=10pt,draw=ocre,fill=white,inner sep=10pt]{\strut\makebox[22cm]{}};
-\draw[anchor=west] (\Gm@lmargin+2.8cm,-9cm) node {\large\sffamily\bfseries\color{black}\theOCchapterauthor\strut};
+% author box auto-sizes (grows downward) to the number of \OCchapterauthor lines
+\draw (\Gm@lmargin+2.5cm,-8.4cm) node[anchor=north west,text width=21.4cm,align=left,line width=1pt,rounded corners=10pt,draw=ocre,fill=white,inner sep=10pt]{\large\sffamily\bfseries\color{black}\theOCchapterauthor\strut};
 \end{tikzpicture}};
 \end{tikzpicture}
 \else
@@ -568,6 +576,7 @@ innerbottommargin=5pt]{cBox}
 \end{tikzpicture}
 \fi\fi\par\vspace*{270\p@}}
 \renewcommand{\thecorechapter}{\nono}
+\renewcommand{\theOCchapterauthor}{}\OC@firstauthortrue
 \renewcommand{\thechapterimage}{\noheaderimage}}
 
 %-------------------------------------------
